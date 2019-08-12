@@ -6,6 +6,12 @@ import {AppBar, Toolbar, Typography} from "material-ui";
 import {createMuiTheme} from 'material-ui/styles';
 import red from 'material-ui/colors/red';
 
+//Do site
+//import {Button, TextField, Typography} from "material-ui";
+import FirebaseService from "../../services/FirebaseService";
+//import {urls} from "../../utils/urlUtils";
+//import {withRouter} from "react-router-dom";
+
 
 const theme = createMuiTheme({
     palette: {
@@ -16,16 +22,12 @@ const theme = createMuiTheme({
 
 class App extends Component {
     state = {
-        data: [
-            {
-                key: 'test key key',
-                temperatura: 'test key temperatura',
-                umidade: 'test key umidade',
-                cliente: 'test key cliente',
-                data: 'test key data',
-            }
-        ]
+        data: []
     };
+    
+    componentDidMount() {
+        FirebaseService.getDataList('leituras', (dataReceived) =>    this.setState({data: dataReceived}))
+    }
 
     render() {
         return (
