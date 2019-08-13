@@ -55,3 +55,15 @@ Projeto ReactJs formulário para firebase
 >Instalar firebase
 
 	npm install --save firebase
+
+>React-Router --> para rotas
+
+	npm install --save react-router-dom
+
+>Instalar Jest para testes
+
+	npm install jest --save-dev
+
+>Para verificar se ele roda corretamente execute o comando 
+
+	npm run test
