@@ -67,3 +67,22 @@ Projeto ReactJs formulário para firebase
 >Para verificar se ele roda corretamente execute o comando 
 
 	npm run test
+
+
+>deploy de nossa aplicação dentro da hospedagem do Firebase
+
+	npm install -g firebase-tools
+
+>realizar o login no firebase utilizando o comando:
+
+	firebase login
+
+>firebase login
+
+	firebase init
+
+>Então, dentro da pasta raiz do projeto, execute o comando
+
+	firebase init
+
+	npm run build

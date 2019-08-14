@@ -1,16 +1,3 @@
-/* import React, {Component} from 'react';
-import './App.css';
-import { DataTable } from '../DataTable/DataTable.js';
-import {MuiThemeProvider} from "material-ui/styles/index";
-import {AppBar, Toolbar, Typography} from "material-ui";
-import {createMuiTheme} from 'material-ui/styles';
-import red from 'material-ui/colors/red';
- */
-
-//Do site
-//import {Button, TextField, Typography} from "material-ui";
-import FirebaseService from "../../services/FirebaseService";
-//Teste
 import React, {Component} from 'react';
 import './App.css';
 import {MuiThemeProvider} from "material-ui/styles/index";
@@ -18,6 +5,7 @@ import {Card, CardContent} from "material-ui";
 import {createMuiTheme} from 'material-ui/styles';
 import red from 'material-ui/colors/red';
 import {DataTable} from "../DataTable/DataTable";
+import FirebaseService from "../../services/FirebaseService";
 import {Route, withRouter} from "react-router-dom";
 import {privateUrls, urls} from "../../utils/urlUtils";
 import Add from "../Add/Add";
@@ -29,24 +17,30 @@ import {login, logout} from "../../action/actionCreator";
 import {compose} from "recompose";
 import NavigationWrapper from '../NavigationWrapper/NavigationWrapper';
 import NavigationLoggedWrapper from "../NavigationWrapper/NavigationLoggedWrapper";
- 
+
 const theme = createMuiTheme({
     palette: {
         primary: red,
     },
 });
 
-
 class App extends Component {
+
     state = {
         data: []
     };
-    
+
     componentDidMount() {
-        FirebaseService.getDataList('leituras', (dataReceived) =>    this.setState({data: dataReceived}))
+        FirebaseService.onAuthChange(
+            (authUser) => this.props.login(authUser),
+            () => this.props.logout()
+        );
+        FirebaseService.getDataList('leituras', (dataReceived) => this.setState({data: dataReceived}))
     }
 
     render() {
+
+
         return (
             <MuiThemeProvider theme={theme}>
 
@@ -88,4 +82,14 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return {
+        login: authUser => dispatch(login(authUser)),
+        logout: () => dispatch(logout()),
+    }
+};
+
+export default compose(
+    withRouter,
+    connect(null, mapDispatchToProps)
+)(App);
